@@ -24,6 +24,7 @@ RUN	useradd -mG sudo student && mkdir -p /etc/sudoers.d && \
 	echo "%sudo   ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudo_nopasswd && \
 	mkdir -p /home/student/src && \
 	echo "\n\
+export PS1='\[\e[01;33m\]\u\[\e[00m\]:\[\e[01;33m\]\w\[\e[00m\]$ '\n\
 export PATH=\$PATH\n\
 PATH=\"\$PATH:/gnuarm-3.4.3/bin\"\n\
 alias arm=\"arm-elf-gcc -S\"\n\
