@@ -29,8 +29,7 @@ PATH=\"\$PATH:/gnuarm-3.4.3/bin\"\n\
 alias arm=\"arm-elf-gcc -S\"\n\
 alias gcc=\"arm-elf-gcc -Wall -g\"\n\
 alias gdb=\"arm-elf-gdb -tui\"\n\
-cd /home/student/src\
-	" >> /home/student/.bashrc
+cd /home/student/src" >> /home/student/.bashrc
 
 COPY	entrypoint.sh /
 ENTRYPOINT	["/entrypoint.sh"]

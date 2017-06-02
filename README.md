@@ -29,10 +29,13 @@ There are two alternative origins:
 * Text editing:
 	* `less`
 	* `vim`. You can change the default text editor by adding args to `build_docker.sh` (i.e. `./build_docker.sh nano`) or `docker build` (i.e. `docker build -t epiceric/gcc-arm --build-arg EDITORPKG=nano docker`).
-* Versioning:
+* Utils:
 	* `git`
 * Compiling and debugging:
-	* `arm main.c` or `arm -o main.s main.c` to compile from C to ARM-Assembly.
-	* `gcc -o main main.c` or `gcc -o main main.s` to compile an executable file `main`.
-	* `gdb main` to run GDB-ARM in Text User Interface.
+	* `arm main.c` to compile from C program `main.c` to ARM-Assembly `main.s`.
+		* Alias for `arm-elf-gcc -S main.c`.
+	* `gcc -o main main.s` to assemble an executable file `main` from `main.s`.
+		* Alias for `arm-elf-gcc -Wall -g -o main main.s`.
+	* `gdb main` to run `main` on GDB in Text User Interface.
+		* Alias for `arm-elf-gdb -tui main`.
 
