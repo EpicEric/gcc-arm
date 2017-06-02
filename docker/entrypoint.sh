@@ -2,7 +2,7 @@
 set -e
 
 if [[ "$*" ]] ; then
-    su - student -c "$*"
+	su - student -c "$*"
 else
-    su - student 
+	su - student 
 fi

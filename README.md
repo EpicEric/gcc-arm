@@ -9,28 +9,30 @@ Docker container for PCS3732 - Laboratory of Processors course in Poli-USP with 
 There are two alternative origins:
 
 * Pulling from Docker Hub:
-    * `docker pull epiceric/gcc-arm`
+	* `docker pull epiceric/gcc-arm`
 
 * Building from GitHub source: 
-    * `git clone https://github.com/EpicEric/gcc-arm.git ; docker build -t epiceric/gcc-arm gcc-arm/docker`
-    * Alternatively, you can clone the repo and run `build_docker.sh` from this directory.
+	* `git clone https://github.com/EpicEric/gcc-arm.git ; cd gcc-arm ; docker build -t epiceric/gcc-arm docker`
+	* Alternatively, you can clone the repo and run `./build_docker.sh` from this directory.
+
 
 ## Running
 
 * Starting an interactive Bash shell:
-    * `docker run -ti -v "$PWD/src":/home/student/src epiceric/gcc-arm`
-    * Alternatively, you can run `run_docker.sh` from this directory.
+	* `docker run -ti -v "$PWD/src":/home/student/src epiceric/gcc-arm`
+	* Alternatively, you can run `./run_docker.sh` from this directory.
 * You can place files in `src/` to mount them in the default directory (`/home/student/src/`).
 * Quit with `Ctrl-D`.
 
 ## Commands
 
 * Text editing:
-    * `vim`, `less`
+	* `less`
+	* `vim`. You can change the default text editor by adding args to `build_docker.sh` (i.e. `./build_docker.sh nano`) or `docker build` (i.e. `docker build -t epiceric/gcc-arm --build-arg EDITORPKG=nano docker`).
 * Versioning:
-    * `git`
+	* `git`
 * Compiling and debugging:
-    * `arm main.c` or `arm -o main.s main.c` to compile from C to ARM-Assembly.
-    * `gcc -o main main.c` or `gcc -o main main.s` to compile an executable file `main`.
-    * `gdb main` to run GDB-ARM in Text User Interface.
+	* `arm main.c` or `arm -o main.s main.c` to compile from C to ARM-Assembly.
+	* `gcc -o main main.c` or `gcc -o main main.s` to compile an executable file `main`.
+	* `gdb main` to run GDB-ARM in Text User Interface.
 
