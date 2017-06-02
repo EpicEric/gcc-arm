@@ -28,7 +28,9 @@ There are two alternative origins:
 
 * Text editing:
 	* `less`
-	* `vim`. You can change the default text editor by adding args to `build_docker.sh` (i.e. `./build_docker.sh nano`) or `docker build` (i.e. `docker build -t epiceric/gcc-arm --build-arg EDITORPKG=nano docker`).
+	* `vim`. You can replace the installed text editor from `vim` to any `apt-get` package(s) of your choice by adding build args to `build_docker.sh` or `docker build`. Examples:
+		* `emacs`: `./build_docker.sh emacs` or `docker build -t epiceric/gcc-arm --build-arg EDITORPKG=emacs docker`
+		* `nano` and `vim`: `./build_docker.sh nano vim` or `docker build -t epiceric/gcc-arm --build-arg EDITORPKG="nano vim" docker`
 * Utils:
 	* `git`
 * Compiling and debugging:
