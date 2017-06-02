@@ -18,7 +18,7 @@ RUN	dpkg --add-architecture i386 && \
 		git && \
 	rm -rf /var/lib/apt/lists/* && \
 	bunzip2 /bu-2.15_gcc-3.4.3-c-c++-java_nl-1.12.0_gi-6.1.tar.bz2 && \
-	tar -xvf /bu-2.15_gcc-3.4.3-c-c++-java_nl-1.12.0_gi-6.1.tar
+	tar -xf /bu-2.15_gcc-3.4.3-c-c++-java_nl-1.12.0_gi-6.1.tar
 
 # Non-root "student" user
 RUN	useradd -mG sudo student && mkdir -p /etc/sudoers.d && \
