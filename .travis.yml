@@ -1,0 +1,12 @@
+sudo: required
+
+services:
+  - docker
+
+install:
+  - docker build -t epiceric/gcc-arm docker
+  - docker run -d -ti -v "$PWD/src":/home/student/src epiceric/gcc-arm
+
+script:
+  - docker ps | grep -q epiceric/gcc-arm
+
