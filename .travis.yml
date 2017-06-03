@@ -12,3 +12,5 @@ install:
 script:
   - docker ps | grep -q epiceric/gcc-arm
 
+notifications:
+  email: false
