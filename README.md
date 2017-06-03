@@ -1,6 +1,10 @@
+[![Docker Stars](https://img.shields.io/docker/stars/epiceric/gcc-arm.svg)](https://hub.docker.com/r/epiceric/gcc-arm/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/epiceric/gcc-arm.svg)](https://hub.docker.com/r/epiceric/gcc-arm/)
+[![Docker Automated build](https://img.shields.io/docker/automated/epiceric/gcc-arm.svg)](https://hub.docker.com/r/epiceric/gcc-arm/)
+
 # GCC-ARM
 
-Docker container for PCS3732 - Laboratory of Processors course in Poli-USP with Ubuntu 16.04 image, able to run a 32-bit GCC version for the ARM architecture. Includes basic text editors and aliases.
+Docker container for "PCS3732 - Laboratory of Processors" course in Poli-USP with Ubuntu 16.04 image, able to run a 32-bit GCC version for the ARM architecture. Includes basic text editors and aliases.
 
 # Usage
 
