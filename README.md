@@ -1,6 +1,6 @@
+[![Build Status](https://travis-ci.org/EpicEric/gcc-arm.svg?branch=master)](https://travis-ci.org/EpicEric/gcc-arm)
 [![Docker Stars](https://img.shields.io/docker/stars/epiceric/gcc-arm.svg)](https://hub.docker.com/r/epiceric/gcc-arm/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/epiceric/gcc-arm.svg)](https://hub.docker.com/r/epiceric/gcc-arm/)
-[![Docker Automated build](https://img.shields.io/docker/automated/epiceric/gcc-arm.svg)](https://hub.docker.com/r/epiceric/gcc-arm/)
 
 # GCC-ARM
 

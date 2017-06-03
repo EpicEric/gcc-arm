@@ -3,6 +3,8 @@ sudo: required
 services:
   - docker
 
+language: bash
+
 install:
   - docker build -t epiceric/gcc-arm docker
   - docker run -d -ti -v "$PWD/src":/home/student/src epiceric/gcc-arm
