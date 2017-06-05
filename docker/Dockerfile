@@ -4,10 +4,10 @@ LABEL maintainer "Eric Pires <ericpires9@gmail.com>"
 # Build arg: Preferred text editor (default = vim)
 ARG	EDITORPKG=vim
 
-# ARM-GCC
-ADD	bu-2.15_gcc-3.4.3-c-c++-java_nl-1.12.0_gi-6.1.tar.bz2 /
+# Install ARM-GCC
+ADD	bu-2.15_gcc-3.4.3-c-c++-java_nl-1.12.0_gi-6.1.tar.bz2	/
 
-# Packages
+# Install additional packages
 RUN	dpkg --add-architecture i386 && \
 	apt-get update && \
 	apt-get install --no-install-recommends -y \
@@ -19,18 +19,25 @@ RUN	dpkg --add-architecture i386 && \
 		git && \
 	rm -rf /var/lib/apt/lists/*
 
-# Non-root "student" user
+# Create non-root "student" user
 RUN	useradd -mG sudo student && mkdir -p /etc/sudoers.d && \
 	echo "%sudo   ALL=(ALL:ALL) NOPASSWD: ALL" > /etc/sudoers.d/sudo_nopasswd && \
-	mkdir -p /home/student/src && \
-	echo "\n\
+	mkdir -p /home/student/src
+
+# Login as "student" user on startup
+COPY	entrypoint.sh	/
+ENTRYPOINT	["/entrypoint.sh"]
+
+# Run commands when starting GDB
+ADD	.gdb	/home/student
+
+# Configure user Bash
+RUN	echo "\n\
 export PS1='\[\e[01;33m\]\u\[\e[00m\]:\[\e[01;33m\]\w\[\e[00m\]$ '\n\
 export PATH=\$PATH\n\
 PATH=\"\$PATH:/gnuarm-3.4.3/bin\"\n\
 alias arm=\"arm-elf-gcc -S\"\n\
 alias gcc=\"arm-elf-gcc -Wall -g\"\n\
-alias gdb=\"arm-elf-gdb -tui\"\n\
+alias gdb=\"arm-elf-gdb -tui --command=/home/student/.gdb\"\n\
 cd /home/student/src" >> /home/student/.bashrc
 
-COPY	entrypoint.sh /
-ENTRYPOINT	["/entrypoint.sh"]

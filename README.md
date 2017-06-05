@@ -39,5 +39,15 @@ There are two alternative origins:
 	* `gcc -o main main.s` to assemble an executable file `main` from `main.s`.
 		* Alias for `arm-elf-gcc -Wall -g -o main main.s`.
 	* `gdb main` to run `main` on GDB in Text User Interface.
-		* Alias for `arm-elf-gdb -tui main`.
+		* Alias for `arm-elf-gdb -tui --command=/home/student/.gdb main`. The following commands are automatically run on startup:
+```
+layout regs
+target sim
+load
+```
 
+To test the example file `item-2-2.s`, compile and run GDB with the following commands:
+* `b main` (`break main`) to set a breakpoint on the `main` label.
+* `r` (`run`) to begin execution.
+* `s` (`step`) to execute every command step-by-step.
+* `q` (`quit`) before running the `SWI` instruction, to stop GDB from freezing.
