@@ -5,7 +5,7 @@ LABEL maintainer "Eric Pires <ericpires9@gmail.com>"
 ARG	EDITORPKG=vim
 
 # Install ARM-GCC
-ADD	bu-2.15_gcc-3.4.3-c-c++-java_nl-1.12.0_gi-6.1.tar.bz2	/
+ADD	files/bu-2.15_gcc-3.4.3-c-c++-java_nl-1.12.0_gi-6.1.tar.bz2	/
 
 # Install additional packages
 RUN	dpkg --add-architecture i386 && \
@@ -29,7 +29,7 @@ COPY	entrypoint.sh	/
 ENTRYPOINT	["/entrypoint.sh"]
 
 # Run commands when starting GDB
-ADD	.gdb	/home/student
+ADD	files/.gdb	/home/student
 
 # Configure user Bash
 RUN	echo "\n\

@@ -21,7 +21,7 @@ There are two alternative origins:
 * Starting an interactive Bash shell:
 	* `docker run -ti -v "$PWD/src":/home/student/src epiceric/gcc-arm`
 	* Alternatively, you can run `./run_docker.sh` from this directory.
-* You can place files in `src/` to mount them in the default directory (`/home/student/src/`).
+* You can place files in `src/` to mount them to the default directory (`/home/student/src/`).
 * Quit with `Ctrl-D`.
 
 ## Commands
@@ -39,14 +39,9 @@ There are two alternative origins:
 	* `gcc -o main main.s` to assemble an executable file `main` from `main.s`.
 		* Alias for `arm-elf-gcc -Wall -g -o main main.s`.
 	* `gdb main` to run `main` on GDB in Text User Interface.
-		* Alias for `arm-elf-gdb -tui --command=/home/student/.gdb main`. The following commands are automatically run on startup:
-```
-layout regs
-target sim
-load
-```
+		* Alias for `arm-elf-gdb -tui --command=/home/student/.gdb main`. The `.gdb` file loads setup commands for GDB (`layout`, `target`, and `load`).
 
-To test the example file `item-2-2.s`, compile and run GDB with the following commands:
+To test the example file `item-2-2.s`, assemble with `gcc` and run the compiled program on `gdb` with the following commands:
 * `b main` (`break main`) to set a breakpoint on the `main` label.
 * `r` (`run`) to begin execution.
 * `s` (`step`) to execute every command step-by-step.
