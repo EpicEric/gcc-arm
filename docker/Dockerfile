@@ -37,7 +37,7 @@ export PS1='\[\e[01;33m\]\u\[\e[00m\]:\[\e[01;33m\]\w\[\e[00m\]$ '\n\
 export PATH=\$PATH\n\
 PATH=\"\$PATH:/gnuarm-3.4.3/bin\"\n\
 alias arm=\"arm-elf-gcc -S\"\n\
-alias gcc=\"arm-elf-gcc -Wall -g\"\n\
+alias gcc=\"arm-elf-gcc -Wall -Wextra -g\"\n\
 alias gdb=\"arm-elf-gdb -tui --command=/home/student/.gdb\"\n\
 cd /home/student/src" >> /home/student/.bashrc
 
