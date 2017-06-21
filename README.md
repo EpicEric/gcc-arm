@@ -49,4 +49,3 @@ To test the example file `item-2-2.s`, assemble with `gcc` and run the compiled 
 * `q` (`quit`): Exit GDB before running the `SWI` instruction, to prevent it from freezing.
 
 Please view the [GDB Manual](https://sourceware.org/gdb/onlinedocs/gdb/index.html) for more information. 
-
