@@ -28,21 +28,25 @@ There are two alternative origins:
 
 * Text editing:
 	* `less`
-	* `vim`. You can replace the installed text editor from `vim` to any `apt-get` package(s) of your choice by adding build args to `build_docker.sh` or `docker build`. Examples:
-		* `emacs`: `./build_docker.sh emacs` or `docker build -t epiceric/gcc-arm --build-arg EDITORPKG=emacs docker`
-		* `nano` and `vim`: `./build_docker.sh nano vim` or `docker build -t epiceric/gcc-arm --build-arg EDITORPKG="nano vim" docker`
+	* `vim`
+		* You can replace the installed text editor from `vim` to any `apt-get` package(s) of your choice by adding build args to `build_docker.sh` or `docker build`. Examples:
+			* `emacs`: `./build_docker.sh emacs` or `docker build -t epiceric/gcc-arm --build-arg EDITORPKG=emacs docker`
+			* `nano` and `vim`: `./build_docker.sh nano vim` or `docker build -t epiceric/gcc-arm --build-arg EDITORPKG="nano vim" docker`
 * Utils:
 	* `git`
 * Compiling and debugging:
-	* `arm main.c` to compile from C program `main.c` to ARM-Assembly `main.s`.
+	* `arm main.c`: Compile from C program `main.c` to ARM-Assembly `main.s`.
 		* Alias for `arm-elf-gcc -S main.c`.
-	* `gcc -o main main.s` to assemble an executable file `main` from `main.s`.
+	* `gcc -o main main.s`: Assemble an executable file `main` from `main.s`.
 		* Alias for `arm-elf-gcc -Wall -g -o main main.s`.
-	* `gdb main` to run `main` on GDB in Text User Interface.
-		* Alias for `arm-elf-gdb -tui --command=/home/student/.gdb main`. The `.gdb` file loads setup commands for GDB (`layout`, `target`, and `load`).
+	* `gdb main`: Run `main` on GDB in Text User Interface.
+		* Alias for `arm-elf-gdb -tui --command=/home/student/.gdb main`. The `.gdb` file loads setup commands for GDB (`layout regs ; target sim ; load`).
 
 To test the example file `item-2-2.s`, assemble with `gcc` and run the compiled program on `gdb` with the following commands:
-* `b main` (`break main`) to set a breakpoint on the `main` label.
-* `r` (`run`) to begin execution.
-* `s` (`step`) to execute every command step-by-step.
-* `q` (`quit`) before running the `SWI` instruction, to stop GDB from freezing.
+* `b main` (`break main`): Set a breakpoint on the `main` label.
+* `r` (`run`): Begin execution.
+* `s` (`step`): Execute every command step-by-step.
+* `q` (`quit`): Exit GDB before running the `SWI` instruction, to prevent it from freezing.
+
+Please view the [GDB Manual](https://sourceware.org/gdb/onlinedocs/gdb/index.html) for more information. 
+
