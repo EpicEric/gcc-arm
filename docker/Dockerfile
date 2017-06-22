@@ -14,9 +14,7 @@ RUN	dpkg --add-architecture i386 && \
 		# Multi-arch libraries
 		libc6:i386 libncurses5:i386 libstdc++6:i386 libx11-6:i386 \
 		# Text editors
-		less $EDITORPKG \
-		# Misc programs
-		git && \
+		less $EDITORPKG && \
 	rm -rf /var/lib/apt/lists/*
 
 # Create non-root "student" user

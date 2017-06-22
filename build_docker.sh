@@ -3,5 +3,6 @@
 if [[ "$*" ]] ; then
 	docker build -t epiceric/gcc-arm --build-arg EDITORPKG="$*" docker
 else
-	docker build -t epiceric/gcc-arm docker
+	GITDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+	docker build -t epiceric/gcc-arm $GITDIR/docker
 fi

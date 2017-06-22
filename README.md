@@ -22,6 +22,7 @@ There are two alternative origins:
 	* `docker run -ti -v "$PWD/src":/home/student/src epiceric/gcc-arm`
 	* Alternatively, you can run `./run_docker.sh` from this directory.
 * You can place files in `src/` to mount them to the default directory (`/home/student/src/`).
+	* Or you can specify a custom source directory location with `./run_docker.sh ~/path/to/custom_src` or `docker run -ti -v "$HOME/path/to/custom_src":/home/student/src epiceric/gcc-arm`.
 * Quit with `Ctrl-D`.
 
 ## Commands
@@ -32,8 +33,6 @@ There are two alternative origins:
 		* You can replace the installed text editor from `vim` to any `apt-get` package(s) of your choice by adding build args to `build_docker.sh` or `docker build`. Examples:
 			* `emacs`: `./build_docker.sh emacs` or `docker build -t epiceric/gcc-arm --build-arg EDITORPKG=emacs docker`
 			* `nano` and `vim`: `./build_docker.sh nano vim` or `docker build -t epiceric/gcc-arm --build-arg EDITORPKG="nano vim" docker`
-* Utils:
-	* `git`
 * Compiling and debugging:
 	* `arm main.c`: Compile from C program `main.c` to ARM-Assembly `main.s`.
 		* Alias for `arm-elf-gcc -S main.c`.
