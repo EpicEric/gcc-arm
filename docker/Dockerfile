@@ -31,6 +31,9 @@ ENTRYPOINT	["/entrypoint.sh"]
 # Run commands when starting GDB
 ADD	files/.gdb	/home/student
 
+# Fix ARM highlight syntax for VIM
+ADD	files/asm.vim	/home/student/.vim/syntax/asm.vim
+
 # Configure user Bash
 RUN	echo "\n\
 export PS1='\[\e[01;33m\]\u\[\e[00m\]:\[\e[01;33m\]\w\[\e[00m\]$ '\n\
