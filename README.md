@@ -48,3 +48,16 @@ To test the example file `item-2-2.s`, assemble with `gcc` and run the compiled 
 * `q` (`quit`): Exit GDB before running the `SWI` instruction, to prevent it from freezing.
 
 Please view the [GDB Manual](https://sourceware.org/gdb/onlinedocs/gdb/index.html) for more information. 
+
+# Advanced
+
+## Running on Windows
+
+First, avoid running Docker on Windows. Second, avoid developing on Windows at all. If you cannot avoid it, proceed anyway.
+
+Obviously, the shell scripts intended for Bash won't work. But instead, if you have the Docker Toolchain up and running, you can still build the container with the full command.
+
+Running the container however is trickier. It has been reported to work with the extra `-e TERM` argument and Linux-based syntax for mounted directories (with `C:\` drive replaced with `/c/`). Here is an example:
+
+```docker run -ti -v "/c/Users/yourname/path/to/custom_src":/home/student/src -e TERM epiceric/gcc-arm```
+
