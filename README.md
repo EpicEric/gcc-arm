@@ -39,7 +39,7 @@ There are two alternative origins:
 	* `gcc -o main main.s`: Assemble an executable file `main` from `main.s`.
 		* Alias for `arm-elf-gcc -Wall -g -o main main.s`.
 	* `gdb main`: Run `main` on GDB in Text User Interface.
-		* Alias for `arm-elf-gdb -tui --command=/home/student/.gdb main`. The `.gdb` file loads setup commands for GDB (`layout regs ; target sim ; load`).
+		* Alias for `arm-elf-gdb -tui --command=/home/student/.gdbinit main`. The `.gdbinit` file loads setup commands for GDB (`layout regs ; target sim ; load`).
 
 To test the example file `item-2-2.s`, assemble with `gcc` and run the compiled program on `gdb` with the following commands:
 * `b main` (`break main`): Set a breakpoint on the `main` label.

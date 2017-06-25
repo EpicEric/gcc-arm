@@ -27,10 +27,10 @@ COPY	entrypoint.sh	/
 ENTRYPOINT	["/entrypoint.sh"]
 
 # Run commands when starting GDB
-ADD	files/.gdb	/home/student
+ADD	files/.gdbinit	/home/student/
 
 # Fix ARM highlight syntax for VIM
-ADD	files/asm.vim	/home/student/.vim/syntax/asm.vim
+ADD	files/asm.vim	/home/student/.vim/syntax/
 
 # Configure user Bash
 RUN	echo "\n\
@@ -39,6 +39,6 @@ export PATH=\$PATH\n\
 PATH=\"\$PATH:/gnuarm-3.4.3/bin\"\n\
 alias arm=\"arm-elf-gcc -S\"\n\
 alias gcc=\"arm-elf-gcc -Wall -Wextra -g\"\n\
-alias gdb=\"arm-elf-gdb -tui --command=/home/student/.gdb\"\n\
+alias gdb=\"arm-elf-gdb -tui --command=/home/student/.gdbinit\"\n\
 cd /home/student/src" >> /home/student/.bashrc
 
