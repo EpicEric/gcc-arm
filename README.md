@@ -1,6 +1,6 @@
 # GCC-ARM [![Build Status](https://travis-ci.org/EpicEric/gcc-arm.svg?branch=master)](https://travis-ci.org/EpicEric/gcc-arm) [![Docker Stars](https://img.shields.io/docker/stars/epiceric/gcc-arm.svg)](https://hub.docker.com/r/epiceric/gcc-arm/) [![Docker Pulls](https://img.shields.io/docker/pulls/epiceric/gcc-arm.svg)](https://hub.docker.com/r/epiceric/gcc-arm/)
 
-Docker container for "PCS3732 - Laboratory of Processors" course in Poli-USP with Ubuntu 16.04 image, able to run a 32-bit GCC version for the ARM architecture. Includes basic text editors and aliases.
+Docker container for "PCS3732 - Laboratory of Processors" course in Poli-USP with Ubuntu 16.04 image, able to run a 32-bit GCC version for the ARM architecture. Includes basic text editor, command aliases, and Evaluator-7T board support.
 
 # Usage
 
@@ -39,7 +39,7 @@ There are two alternative origins:
 	* `gcc -o main main.s`: Assemble an executable file `main` from `main.s`.
 		* Alias for `arm-elf-gcc -Wall -g -o main main.s`.
 	* `gdb main`: Run `main` on GDB in Text User Interface.
-		* Alias for `arm-elf-gdb -tui --command=/home/student/.gdbinit main`. The `.gdbinit` file loads setup commands for GDB (`layout regs ; target sim ; load`).
+		* Alias for `arm-elf-gdb -tui --command=/home/student/.gdbinit/default main`. The `.gdbinit/default` file loads setup commands for GDB (`layout regs ; target sim ; load`).
 
 To test the example file `item-2-2.s`, assemble with `gcc` and run the compiled program on `gdb` with the following commands:
 * `b main` (`break main`): Set a breakpoint on the `main` label.
@@ -47,15 +47,29 @@ To test the example file `item-2-2.s`, assemble with `gcc` and run the compiled 
 * `s` (`step`): Execute every command step-by-step.
 * `q` (`quit`): Exit GDB before running the `SWI` instruction, to prevent it from freezing.
 
-Please view the [GDB Manual](https://sourceware.org/gdb/onlinedocs/gdb/index.html) for more information. 
+For documentation on the ARM Assembly language, please refer to the [ARM Laboratory Exercises](http://courses.cs.tamu.edu/rabi/cpsc617/resources/ARM%20Lab%20Mannual.pdf).
+
+Please view the [GDB Manual](https://sourceware.org/gdb/onlinedocs/gdb/index.html) for more information on running GDB.
 
 # Advanced
 
+## Connecting to the ARM Evaluator-7T Board
+
+The ARM Evaluator-7T board must be connected to your computer through an USB port. Identify the appropriate interface in the host (for example, `/dev/ttyUSB0`) and run the container with a second argument:
+* `./run_docker.sh ~/path/to/custom/src /dev/ttyUSB0`
+* (Shorthand for `docker run -ti -v "$HOME/path/to/custom_src":/home/student/src --device=/dev/ttyUSB0:/dev/ttyS0 epiceric/gcc-arm`).
+
+Then, you must use `e7t main` instead of `gdb main`. The only difference is `.gdbinit/default` being replaced by `.gdbinit/evaluator7t`, with separate setup commands (`layout regs ; set remotebaud 57600 ; target rdi /dev/ttyS0 ; load`). Once you're in GDB, set your breakpoints and begin execution with `c` (`continue`) instead of the default run command.
+
+For detailed information on the board, please refer to the [Evaluator-7T User Guide](http://infocenter.arm.com/help/topic/com.arm.doc.dui0134a/DUI0134A_evaluator7t_ug.pdf).
+
 ## Running on Windows
+
+**Note:** This solution only appears to work in the regular command line, but not in PowerShell.
 
 First, avoid running Docker on Windows. Second, avoid developing on Windows at all. If you cannot avoid it, proceed anyway.
 
-Obviously, the shell scripts intended for Bash won't work. But instead, if you have the Docker Toolchain up and running, you can still build the container with the full command.
+Obviously, the shell scripts intended for Bash won't work. But instead, if you have the Docker Toolchain up and running, you can still build the container with the full command. 
 
 Running the container however is trickier. It has been reported to work with the extra `-e TERM` argument and Linux-based syntax for mounted directories (with `C:\` drive replaced with `/c/`). Here is an example:
 

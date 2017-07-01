@@ -7,4 +7,8 @@ else
 	SRCDIR="$GITDIR/src"
 fi
 
-docker run -ti -v "$SRCDIR":/home/student/src epiceric/gcc-arm
+if [[ "$2" ]]; then
+	docker run -ti -v "$SRCDIR":/home/student/src --device=$2:/dev/ttyS0 epiceric/gcc-arm
+else
+	docker run -ti -v "$SRCDIR":/home/student/src epiceric/gcc-arm
+fi
