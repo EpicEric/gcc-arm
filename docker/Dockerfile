@@ -33,13 +33,6 @@ ADD	files/.gdbinit	/home/student/.gdbinit/
 ADD	files/asm.vim	/home/student/.vim/syntax/
 
 # Configure user Bash
-RUN	echo "\n\
-export PS1='\[\e[01;33m\]\u\[\e[00m\]:\[\e[01;33m\]\w\[\e[00m\]$ '\n\
-export PATH=\$PATH\n\
-PATH=\"\$PATH:/gnuarm-3.4.3/bin\"\n\
-alias arm=\"arm-elf-gcc -S\"\n\
-alias gcc=\"arm-elf-gcc -Wall -Wextra -g\"\n\
-alias gdb=\"arm-elf-gdb -tui --command=/home/student/.gdbinit/default\"\n\
-alias e7t=\"arm-elf-gdb -tui --command=/home/student/.gdbinit/evaluator7t\"\n\
-cd /home/student/src" >> /home/student/.bashrc
-
+ADD	files/.bashrc	/home/student/.bashrc_tmp
+RUN	cat < /home/student/.bashrc_tmp >> /home/student/.bashrc && \
+	rm /home/student/.bashrc_tmp
