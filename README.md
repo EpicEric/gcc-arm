@@ -45,7 +45,7 @@ To test the example file `item-2-2.s`, assemble with `gcc` and run the compiled 
 * `b main` (`break main`): Set a breakpoint on the `main` label.
 * `r` (`run`): Begin execution.
 * `s` (`step`): Execute every command step-by-step.
-* `q` (`quit`): Exit GDB before running the `SWI` instruction, to prevent it from freezing.
+* `q` (`quit`): Exit GDB once the program is finished.
 
 For documentation on the ARM Assembly language, please refer to the [ARM Laboratory Exercises](http://courses.cs.tamu.edu/rabi/cpsc617/resources/ARM%20Lab%20Mannual.pdf).
 
