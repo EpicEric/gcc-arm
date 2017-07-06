@@ -33,6 +33,6 @@ ADD	files/.gdbinit	/home/student/.gdbinit/
 ADD	files/asm.vim	/home/student/.vim/syntax/
 
 # Configure user Bash
-ADD	files/.bashrc	/home/student/.bashrc_tmp
-RUN	cat < /home/student/.bashrc_tmp >> /home/student/.bashrc && \
-	rm /home/student/.bashrc_tmp
+ADD	files/.bashrc	/
+RUN	cat < /.bashrc >> /home/student/.bashrc
+

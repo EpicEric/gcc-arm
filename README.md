@@ -36,10 +36,11 @@ There are two alternative origins:
 * Compiling and debugging:
 	* `arm main.c`: Compile from C program `main.c` to ARM-Assembly `main.s`.
 		* Alias for `arm-elf-gcc -S main.c`.
-	* `gcc -o main main.s`: Assemble an executable file `main` from `main.s`.
+	* `gcc -o main main.s`: Assemble an executable file `main` from `main.s`. Receives one or more C or Assembly files as input.
 		* Alias for `arm-elf-gcc -Wall -g -o main main.s`.
 	* `gdb main`: Run `main` on GDB in Text User Interface.
 		* Alias for `arm-elf-gdb -tui --command=/home/student/.gdbinit/default main`. The `.gdbinit/default` file loads setup commands for GDB (`layout regs ; target sim ; load`).
+	* For more toolchain commands, list all executables in `/gnuarm-3.4.3/bin`.
 
 To test the example file `item-2-2.s`, assemble with `gcc` and run the compiled program on `gdb` with the following commands:
 * `b main` (`break main`): Set a breakpoint on the `main` label.
