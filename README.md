@@ -56,6 +56,8 @@ Please view the [GDB Manual](https://sourceware.org/gdb/onlinedocs/gdb/index.htm
 
 ## Connecting to the ARM Evaluator-7T Board
 
+**Note:** Due to how Docker Toolchain exposes devices to the Linux virtual machine, there is no simple workaround for OS X or Windows. As such, this section will only work for Linux hosts.
+
 The ARM Evaluator-7T board must be connected to your computer through an USB port. Identify the appropriate interface in the host (for example, `/dev/ttyUSB0`) and run the container with a second argument:
 * `./run_docker.sh ~/path/to/custom/src /dev/ttyUSB0`
 * (Shorthand for `docker run -ti -v "$HOME/path/to/custom_src":/home/student/src --device=/dev/ttyUSB0:/dev/ttyS0 epiceric/gcc-arm`).
@@ -67,8 +69,6 @@ For detailed information on the board, please refer to the [Evaluator-7T User Gu
 ## Running on Windows
 
 **Note:** This solution only appears to work in the regular command line, but not in PowerShell.
-
-First, avoid running Docker on Windows. Second, avoid developing on Windows at all. If you cannot avoid it, proceed anyway.
 
 Obviously, the shell scripts intended for Bash won't work. But instead, if you have the Docker Toolchain up and running, you can still build the container with the full command. 
 
