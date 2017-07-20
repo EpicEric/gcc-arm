@@ -95,7 +95,11 @@ In another terminal, open the same container with `./run_docker.sh` (without par
 
 ```
 eabi-qemu -se program.elf
-[gdb] continue
+[gdb] load
+[gdb] break c_entry
+[gdb] ccontinue
+[gdb] ...
+[gdb] quit
 pkill qemu
 ```
 
