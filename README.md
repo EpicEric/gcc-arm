@@ -66,6 +66,30 @@ Then, you must use `e7t main` instead of `gdb main`. The only difference is `.gd
 
 For detailed information on the board, please refer to the [Evaluator-7T User Guide](http://infocenter.arm.com/help/topic/com.arm.doc.dui0134a/DUI0134A_evaluator7t_ug.pdf).
 
+## Bare metal with arm-none-eabi
+
+Another toolchain that comes with this installation is the [Sourcery CodeBench Lite for ARM EABI](https://sourcery.mentor.com/GNUToolchain/release2032). It facilitates building bare metal programs with a C user program, an Assembly interrupt vector and a linker script. Furthermore, the compiled executable can be run and tested on GDB. Here is a useful set of commands:
+
+```
+eabi-gcc c_entry.c -o c_entry.o
+eabi-as startup.s -o startup.o
+eabi-ld -T vector_table.ld c_entry.o startup.o -o program.elf
+eabi-gdb program.elf
+```
+
+Running code on an emulated board with QEMU (use `continue` instead of `run` in GDB):
+
+```
+eabi-gcc c_entry.c -o c_entry.o
+eabi-as startup.s -o startup.o
+eabi-ld -T vector_table.ld c_entry.o startup.o -o program.elf
+eabi-bin program.elf program.bin
+qemu program.bin &
+eabi-qemu -se program.elf
+```
+
+Useful resources from Balau: [a basic example](https://balau82.wordpress.com/2010/02/14/simplest-bare-metal-program-for-arm/), ['Hello World'](https://balau82.wordpress.com/2010/02/28/hello-world-for-bare-metal-arm-using-qemu/).
+
 ## Running on Windows
 
 **Note:** This solution only appears to work in the regular command line, but not in PowerShell.
