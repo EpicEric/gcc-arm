@@ -19,7 +19,7 @@ There are two alternative origins:
 ## Running
 
 * Starting an interactive Bash shell:
-	* `docker run -ti -v "$PWD/src":/home/student/src epiceric/gcc-arm`
+	* `docker run --rm -ti -v "$PWD/src":/home/student/src epiceric/gcc-arm`
 	* Alternatively, you can run `./run_docker.sh` from this directory.
 * You can place files in `src/` to mount them to the default directory (`/home/student/src/`).
 	* Or you can specify a custom source directory location with `./run_docker.sh ~/path/to/custom_src` or `docker run -ti -v "$HOME/path/to/custom_src":/home/student/src epiceric/gcc-arm`.
@@ -70,6 +70,10 @@ For detailed information on the board, please refer to the [Evaluator-7T User Gu
 
 Another toolchain that comes with this installation is the [Sourcery CodeBench Lite for ARM EABI](https://sourcery.mentor.com/GNUToolchain/release2032). It facilitates building bare metal programs with a C user program, an Assembly interrupt vector and a linker script. Furthermore, the compiled executable can be run and tested on GDB. Here is a useful set of commands:
 
+Useful resources from Balau: [a basic example](https://balau82.wordpress.com/2010/02/14/simplest-bare-metal-program-for-arm/), ['Hello World'](https://balau82.wordpress.com/2010/02/28/hello-world-for-bare-metal-arm-using-qemu/).
+
+### Regular program
+
 ```
 eabi-gcc c_entry.c -o c_entry.o
 eabi-as startup.s -o startup.o
@@ -77,18 +81,23 @@ eabi-ld -T vector_table.ld c_entry.o startup.o -o program.elf
 eabi-gdb program.elf
 ```
 
-Running code on an emulated board with QEMU (use `continue` instead of `run` in GDB):
+# Code on emulated board with QEMU
 
 ```
 eabi-gcc c_entry.c -o c_entry.o
 eabi-as startup.s -o startup.o
 eabi-ld -T vector_table.ld c_entry.o startup.o -o program.elf
 eabi-bin program.elf program.bin
-qemu program.bin &
-eabi-qemu -se program.elf
+qemu program.bin
 ```
 
-Useful resources from Balau: [a basic example](https://balau82.wordpress.com/2010/02/14/simplest-bare-metal-program-for-arm/), ['Hello World'](https://balau82.wordpress.com/2010/02/28/hello-world-for-bare-metal-arm-using-qemu/).
+In another terminal, open the same container with `./run_docker.sh` (without parameters).
+
+```
+eabi-qemu -se program.elf
+[gdb] continue
+pkill qemu
+```
 
 ## Running on Windows
 
