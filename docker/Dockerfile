@@ -16,6 +16,8 @@ RUN	dpkg --add-architecture i386 && \
 	apt-get install --no-install-recommends -y \
 		# Multi-arch libraries
 		libc6:i386 libncurses5:i386 libstdc++6:i386 libx11-6:i386 \
+		# QEMU for emulated Versatile board
+		qemu-system-arm \
 		# Text editors
 		less $EDITORPKG && \
 	rm -rf /var/lib/apt/lists/*

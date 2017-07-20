@@ -77,6 +77,17 @@ eabi-ld -T vector_table.ld c_entry.o startup.o -o program.elf
 eabi-gdb program.elf
 ```
 
+Running code on an emulated board with QEMU (use `continue` instead of `run` in GDB):
+
+```
+eabi-gcc c_entry.c -o c_entry.o
+eabi-as startup.s -o startup.o
+eabi-ld -T vector_table.ld c_entry.o startup.o -o program.elf
+eabi-bin program.elf program.bin
+qemu program.bin &
+eabi-qemu -se program.elf
+```
+
 Useful resources from Balau: [a basic example](https://balau82.wordpress.com/2010/02/14/simplest-bare-metal-program-for-arm/), ['Hello World'](https://balau82.wordpress.com/2010/02/28/hello-world-for-bare-metal-arm-using-qemu/).
 
 ## Running on Windows
