@@ -4,8 +4,11 @@ LABEL maintainer "Eric Pires <ericpires9@gmail.com>"
 # Build arg: Preferred text editor (default = vim)
 ARG	EDITORPKG=vim
 
-# Install ARM-GCC
+# Install arm-elf
 ADD	files/bu-2.15_gcc-3.4.3-c-c++-java_nl-1.12.0_gi-6.1.tar.bz2	/
+
+# Install arm-none-eabi
+ADD	files/arm-2011.09-69-arm-none-eabi-i686-pc-linux-gnu.tar.bz2	/
 
 # Install additional packages
 RUN	dpkg --add-architecture i386 && \
