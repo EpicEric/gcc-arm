@@ -81,7 +81,7 @@ eabi-ld -T vector_table.ld c_entry.o startup.o -o program.elf
 eabi-gdb program.elf
 ```
 
-# Code on emulated board with QEMU
+### Code on emulated board with QEMU
 
 ```
 eabi-gcc c_entry.c -o c_entry.o
@@ -95,9 +95,8 @@ In another terminal, open the same container with `./run_docker.sh` (without par
 
 ```
 eabi-qemu -se program.elf
-[gdb] load
 [gdb] break c_entry
-[gdb] ccontinue
+[gdb] continue
 [gdb] ...
 [gdb] quit
 pkill qemu
