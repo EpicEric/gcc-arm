@@ -13,7 +13,7 @@ else
 	fi
 
 	if [[ "$2" ]]; then
-		docker run --rm -ti -v "$SRCDIR":/home/student/src --device=$2:/dev/ttyS0 epiceric/gcc-arm
+		docker run --rm -ti -v "$SRCDIR":/home/student/src --device="$2":/dev/ttyS0 epiceric/gcc-arm
 	else
 		docker run --rm -ti -v "$SRCDIR":/home/student/src epiceric/gcc-arm
 	fi

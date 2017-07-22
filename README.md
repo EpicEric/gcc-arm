@@ -22,7 +22,7 @@ There are two alternative origins:
 	* `docker run --rm -ti -v "$PWD/src":/home/student/src epiceric/gcc-arm`
 	* Alternatively, you can run `./run_docker.sh` from this directory.
 * You can place files in `src/` to mount them to the default directory (`/home/student/src/`).
-	* Or you can specify a custom source directory location with `./run_docker.sh ~/path/to/custom_src` or `docker run -ti -v "$HOME/path/to/custom_src":/home/student/src epiceric/gcc-arm`.
+	* Or you can specify a custom source directory location with `./run_docker.sh ~/path/to/custom_src` or `docker run --rm -ti -v "$HOME/path/to/custom_src":/home/student/src epiceric/gcc-arm`.
 * Quit with `Ctrl-D`.
 
 ## Commands
@@ -54,17 +54,53 @@ Please view the [GDB Manual](https://sourceware.org/gdb/onlinedocs/gdb/index.htm
 
 # Advanced
 
-## Connecting to the ARM Evaluator-7T Board
+## Running on Windows
 
-**Note:** Due to how Docker Toolchain exposes devices to the Linux virtual machine, there is no simple workaround for OS X or Windows. As such, this section will only work for Linux hosts.
+**Note:** This solution only appears to work in the regular command line, but not in PowerShell.
+
+Obviously, the shell scripts intended for Bash won't work. But instead, if you have the Docker Toolchain up and running, you can still build the container with the full command.
+
+Running the container however is trickier. It has been reported to work with the extra `-e TERM` argument and Linux-based syntax for mounted directories (i.e. `C:\` drive replaced by `/c/`). Here is an example:
+
+`docker run --rm -ti -v "/c/Users/yourname/path/to/custom_src":/home/student/src -e TERM epiceric/gcc-arm`
+
+## Connecting to the ARM Evaluator-7T Board
 
 The ARM Evaluator-7T board must be connected to your computer through an USB port. Identify the appropriate interface in the host (for example, `/dev/ttyUSB0`) and run the container with a second argument:
 * `./run_docker.sh ~/path/to/custom/src /dev/ttyUSB0`
-* (Shorthand for `docker run -ti -v "$HOME/path/to/custom_src":/home/student/src --device=/dev/ttyUSB0:/dev/ttyS0 epiceric/gcc-arm`).
+* (Shorthand for `docker run --rm -ti -v "$HOME/path/to/custom_src":/home/student/src --device=/dev/ttyUSB0:/dev/ttyS0 epiceric/gcc-arm`).
 
 Then, you must use `e7t main` instead of `gdb main`. The only difference is `.gdbinit/default` being replaced by `.gdbinit/evaluator7t`, with separate setup commands (`layout regs ; set remotebaud 57600 ; target rdi /dev/ttyS0 ; load`). Once you're in GDB, set your breakpoints and begin execution with `c` (`continue`) instead of the default run command.
 
 For detailed information on the board, please refer to the [Evaluator-7T User Guide](http://infocenter.arm.com/help/topic/com.arm.doc.dui0134a/DUI0134A_evaluator7t_ug.pdf).
+
+### Other operating systems
+
+Due to how Docker Toolchain exposes devices to the Linux virtual machine, there is no simple workaround for OS X or Windows. If you are a more experienced user, you may try to set up a Oracle VirtualBox machine and run this container from there. **All of the following commands are run at your own risk, and I hold no liability.**
+
+#### OS X
+
+1. Create a Docker Machine in VirtualBox (in this case, named `vbox-test`).
+	* `docker-machine create -d virtualbox vbox-test`
+2. Download and install the [VirtualBox Extension Pack](https://www.virtualbox.org/wiki/Downloads) with the VirtualBox GUI.
+3. Connect the Evaluator-7T board on an USB port.
+4. Turn off the virtual machine.
+	* `docker-machine stop vbox-test`
+5. In the VirtualBox GUI configurations, right-click your VM and enable/add the appropriate device in "Settings -> Ports -> USB".
+6. Turn on the virtual machine.
+	* `docker-machine start vbox-test && eval $(docker-machine env vbox-test)`
+7. Build or pull the container inside the VM. The file structure is identical to the host's.
+	* `docker-machine ssh vbox-test docker build -t epiceric/gcc-arm $PWD/docker`
+8. Identify the relevant USB device.
+	* `docker-machine ssh vbox-test ls /dev | grep -i USB`
+9. Run the container as usual, setting the appropriate device as `/dev/ttyS0` (in this case, `/dev/usb`).
+	* `docker run --rm -ti -v "$HOME/path/to/custom_src":/home/student/src --device=/dev/usb:/dev/ttyS0 epiceric/gcc-arm`
+
+#### Windows
+
+No guide yet. :^)
+
+Following similar steps to OS X might work. However, Windows may require Hyper-V to be disabled before using Oracle VirtualBox. Please tell me if you manage to make it work.
 
 ## Bare metal with arm-none-eabi
 
@@ -101,14 +137,4 @@ eabi-qemu -se program.elf
 [gdb] quit
 pkill qemu
 ```
-
-## Running on Windows
-
-**Note:** This solution only appears to work in the regular command line, but not in PowerShell.
-
-Obviously, the shell scripts intended for Bash won't work. But instead, if you have the Docker Toolchain up and running, you can still build the container with the full command. 
-
-Running the container however is trickier. It has been reported to work with the extra `-e TERM` argument and Linux-based syntax for mounted directories (with `C:\` drive replaced with `/c/`). Here is an example:
-
-```docker run -ti -v "/c/Users/yourname/path/to/custom_src":/home/student/src -e TERM epiceric/gcc-arm```
 
