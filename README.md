@@ -138,3 +138,10 @@ eabi-qemu -se program.elf
 pkill qemu
 ```
 
+# License
+
+This code is released under the GNU General Public License v3.
+
+The ARM-ELF toolchain is available under the GNU General Public License v2.
+
+The ARM-EABI toolchain is available under the CodeSourcery License.
