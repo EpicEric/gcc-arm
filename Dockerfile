@@ -1,5 +1,4 @@
 FROM ubuntu:16.04
-LABEL maintainer "Eric Pires <ericpires9@gmail.com>"
 
 # Build arg: Preferred text editor (default = vim)
 ARG	EDITORPKG=vim
@@ -28,7 +27,7 @@ RUN	useradd -mG sudo student && mkdir -p /etc/sudoers.d && \
 	mkdir -p /home/student/src
 
 # Login as "student" user on startup
-COPY	entrypoint.sh	/
+COPY	files/entrypoint.sh	/
 ENTRYPOINT	["/entrypoint.sh"]
 
 # Run commands when starting GDB
@@ -37,7 +36,6 @@ ADD	files/.gdbinit	/home/student/.gdbinit/
 # Fix ARM highlight syntax for VIM
 ADD	files/asm.vim	/home/student/.vim/syntax/
 
-# Configure user Bash
+# Configure user shell
 ADD	files/.bashrc	/
 RUN	cat < /.bashrc >> /home/student/.bashrc
-

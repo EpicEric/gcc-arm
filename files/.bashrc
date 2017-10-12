@@ -1,5 +1,5 @@
 
-# Configure user Bash
+# Configure user shell
 export PS1="\e[01;33m\u\e[00m:\e[01;33m\w\e[00m$ "
 export PATH=$PATH
 PATH="$PATH:/gnuarm-3.4.3/bin:/arm-2011.09/bin"
