@@ -4,10 +4,10 @@ main:
     LDR r3, =0
     LDR r4, =1
     LDR r1, =12
-    CMP r1, #1
+    CMP r1, #1          /* Caso n = 1 */
     MOVEQ r0, #1
     BEQ end
-    CMP r1, #0
+    CMP r1, #0          /* Caso n = 0 */
     MOVEQ r0, #0
     BEQ end
     BL loop
