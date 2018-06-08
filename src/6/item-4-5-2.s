@@ -19,11 +19,11 @@ array:
 pos_indexado:
   LDR r3, [r2], #20
   LDR r3, [r2], #20
-  ADD r0, r3, r1
-  STR r0, [r2]
+  ADD r0, r3, r1      /* array[5] + y */
+  STR r0, [r2]        /* array[10] = array[5] + y */
   MOV pc, lr
 pre_indexado:
   LDR r3, [r2, #20]
-  ADD r0, r3, r1
-  STR r0, [r2, #40]
+  ADD r0, r3, r1      /* array[5] + y */
+  STR r0, [r2, #40]   /* array[10] = array[5] + y */
   MOV pc, lr

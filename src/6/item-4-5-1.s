@@ -17,9 +17,9 @@ array:
 pos_indexado:
   LDR r0, [r2], #20
   LDR r0, [r2]
-  ADD r0, r0, r1
+  ADD r0, r0, r1      /* x = array[5] + y */
   MOV pc, lr
 pre_indexado:
   LDR r0, [r2, #20]
-  ADD r0, r0, r1
+  ADD r0, r0, r1      /* x = array[5] + y */
   MOV pc, lr
