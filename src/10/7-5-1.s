@@ -17,13 +17,13 @@ loop_leds:
 loop_increment:
   ADD   r4, r4, #1
   MOV   r5, r4, LSL #4
-  STR   r4, [r2]
+  STR   r5, [r2]
   BL    delay
   CMP   r4, #15
   BNE   loop_increment
 loop_decrement:
   MOV   r5, r4, LSL #4
-  STR   r4, [r2]
+  STR   r5, [r2]
   BL    delay
   SUBS  r4, r4, #1
   BNE   loop_decrement
