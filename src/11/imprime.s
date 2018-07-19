@@ -2,7 +2,14 @@
 	.section	.rodata
 	.align	2
 .LC0:
-	.ascii	"numero = %d\n\000"
+	.ascii	"%d\000"
+	.global	mensagem
+	.data
+	.align	2
+	.type	mensagem, %object
+	.size	mensagem, 4
+mensagem:
+	.word	.LC0
 	.text
 	.align	2
 	.global	imprime
@@ -15,38 +22,18 @@ imprime:
 	sub	fp, ip, #4
 	sub	sp, sp, #4
 	str	r0, [fp, #-16]
-	ldr	r3, [fp, #-16]
-	cmp	r3, #0
-	bge	.L2
-	b	.L1
-.L2:
-	ldr	r0, .L3
-	ldr	r1, [fp, #-16]
-	bl	printf
-	ldr	r3, [fp, #-16]
-	sub	r3, r3, #1
-	mov	r0, r3
-	bl	imprime
-.L1:
-	ldmfd	sp, {r3, fp, sp, pc}
-.L4:
-	.align	2
-.L3:
-	.word	.LC0
-	.size	imprime, .-imprime
-	.align	2
-	.global	main
-	.type	main, %function
-main:
-	@ args = 0, pretend = 0, frame = 0
-	@ frame_needed = 1, uses_anonymous_args = 0
 	mov	ip, sp
 	stmfd	sp!, {fp, ip, lr, pc}
 	sub	fp, ip, #4
-	mov	r0, #5
-	bl	imprime
-	mov	r3, #0
-	mov	r0, r3
-	ldmfd	sp, {fp, sp, pc}
-	.size	main, .-main
+	sub	sp, sp, #4
+	str	r0, [fp, #-16]
+	ldr	r3, referencia
+	ldr	r0, [r3, #0]
+	ldr	r1, [fp, #-16]
+	bl	printf
+	ldmfd	sp, {r3, fp, sp, pc}
+	referencia: .word mensagem
+	
+	ldmfd	sp, {r3, fp, sp, pc}
+	.size	imprime, .-imprime
 	.ident	"GCC: (GNU) 3.4.3"
