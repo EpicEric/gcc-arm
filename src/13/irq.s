@@ -1,4 +1,5 @@
 .global _start
+.global handler_timer
 .text
 _start:
   b _Reset                        @posicao 0x00 - Reset
@@ -27,6 +28,11 @@ TIMER0C:  .word 0x101E2008 @timer 0 control register
 TIMER0X:  .word 0x101E200c @timer 0 interrupt clear register
 
 _Reset:
+  ldr sp, =stack_top
+  mrs r0, cpsr
+  msr cpsr_ctl, #0b11010010
+  ldr sp, =irq_stack_top
+  msr cpsr, r0
   bl main
   b .
 
@@ -56,39 +62,31 @@ do_software_interrupt:  @Rotina de interrupcao de Software
   mov pc, r14           @volta p/ o endereco armazenado em r14
 
 do_irq_interrupt:
+  sub   lr, lr, #4
   stmfd sp!, {r0-r3,lr} @Empilha os registradores
   ldr   r0, INTPND      @Carrega o registrador de status de interrupcao
   ldr   r0, [r0]
   tst   r0, #0x0010     @Verifica se é uma interrupcao de timer
-  bne   handler_timer   @vai para a rotina de tratamento da interrupcao de timer
-  ldmfd sp!, {r0-r3,lr}
-  mov pc, r14
-
-handler_timer:
-  ldr   r0, TIMER0X
-  mov   r1, #0x0
-  str   r1, [r0]    @Escreve no registrador TIMER0X para limpar o pedido de interrupcao
-  @Inserir codigo que sera executado na interrupcao de timer aqui
-  @(chaveamento de processos ou alternar LED, por exemplo)
-  ldmfd sp!, {r0-r3,lr}
-  mov   pc, r14
+  blne  handler_timer   @vai para a rotina de tratamento da interrupcao de timer
+  ldmfd sp!,{r0-r3,pc}^
 
 timer_init:
+  LDR r0, INTEN
+  LDR r1,=0x10      @bit 4 for timer 0 interrupt enable
+  STR r1,[r0]
+  LDR r0, TIMER0L
+  LDR r1, =0xff @setting timer value
+  STR r1,[r0]
+  LDR r0, TIMER0C
+  MOV r1, #0xE0     @enable timer module
+  STR r1, [r0]
   mrs r0, cpsr
-  bic r0, r0, #0x80
-  msr cpsr_c, r0      @Enabling interrupts in the cpsr
-  ldr r0, INTEN
-  ldr r1, =0x10       @Bit 4 for timer 0 interrupt enable
-  str r1, [r0]
-  ldr r0, TIMER0C
-  ldr r1, [r0]
-  mov r1, #0xA0       @Enable timer module
-  ldr r0, TIMER0V
-  mov r1, #0xFF       @Setting timer value
-  str r1, [r0]
+  bic r0,r0,#0x80
+  msr cpsr_c,r0     @enabling interrupts in the cpsr
   mov pc, lr
 
 main:
   bl timer_init   @Initialize interrupts and timer 0
+  bl c_entry
 stop:
   b stop
